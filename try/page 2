@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Junaid — Gearbox Casing Optimization</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --brown-950:#241610;
+    --brown-900:#2E1D14;
+    --brown-800:#3A251A;
+    --tan-500:#A9836A;
+    --tan-400:#BE9C81;
+    --tan-300:#D7BFA9;
+    --cream:#FFFFFF;
+    --ink-900:#2A2019;
+    --ink-600:#5B4C40;
+    --line:#E7DCD1;
+    --radius:4px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html,body{
+    width:100%;
+    background:var(--cream);
+    font-family:'Inter', sans-serif;
+    color:var(--ink-900);
+    overflow-x:hidden;
+    scroll-behavior:smooth;
+  }
+
+  ::selection{ background:var(--tan-400); color:#fff; }
+
+  .page{
+    display:grid;
+    grid-template-columns:300px 1fr;
+    max-width:1150px;
+    margin:0 auto;
+    min-height:100vh;
+    background:var(--cream);
+    box-shadow:0 0 40px rgba(0,0,0,0.06);
+  }
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    background:var(--brown-950);
+    color:#EFE7DF;
+    padding:48px 32px;
+    position:relative;
+    overflow:hidden;
+  }
+  .sidebar::before{
+    content:"";
+    position:absolute;
+    top:-80px; right:-80px;
+    width:220px; height:220px;
+    border-radius:50%;
+    background:radial-gradient(circle, var(--tan-500) 0%, transparent 70%);
+    opacity:0.15;
+    animation: pulseGlow 4s infinite alternate;
+  }
+
+  @keyframes pulseGlow {
+    0% { transform: scale(1); opacity: 0.15; }
+    100% { transform: scale(1.2); opacity: 0.25; }
+  }
+
+  .nav-btn {
+    display: inline-block;
+    text-decoration: none;
+    color: var(--brown-950);
+    background: var(--tan-400);
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(169,131,106,0.3);
+  }
+  
+  .nav-btn:hover {
+    background: var(--cream);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(255,255,255,0.2);
+  }
+
+  .sidebar h3{
+    font-family:'Poppins', sans-serif;
+    font-size:13px;
+    letter-spacing:3px;
+    font-weight:700;
+    color:#fff;
+    text-transform:uppercase;
+    margin-bottom:14px;
+    position:relative;
+    padding-bottom:10px;
+  }
+  
+  .sidebar h3::after{
+    content:"";
+    position:absolute;
+    left:0; bottom:0;
+    height:2px; width:34px;
+    background:var(--tan-500);
+    transform-origin:left;
+    animation:growLine .8s ease .3s both;
+  }
+  
+  @keyframes growLine{ from{ transform:scaleX(0);} to{ transform:scaleX(1);} }
+
+  .side-block{
+    margin-bottom:34px;
+    opacity:0;
+    transform:translateX(-16px);
+    animation:slideIn .6s ease forwards;
+  }
+  .side-block:nth-of-type(1){ animation-delay:.25s; }
+  .side-block:nth-of-type(2){ animation-delay:.4s; }
+
+  @keyframes slideIn{ to{ opacity:1; transform:translateX(0); } }
+
+  .sidebar p{ font-size:13.5px; line-height:1.75; color:#D9CFC5; }
+
+  /* ---------- MAIN ---------- */
+  .main{ background:var(--cream); }
+
+  .hero{
+    background:linear-gradient(120deg, var(--tan-500), var(--tan-400));
+    padding:52px 48px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute; inset:0;
+    background:repeating-linear-gradient(115deg, rgba(255,255,255,0.06) 0 2px, transparent 2px 40px);
+    animation:driftBg 12s linear infinite;
+  }
+  @keyframes driftBg{ from{ background-position:0 0; } to{ background-position:400px 0; } }
+
+  .hero h1{
+    font-family:'Poppins', sans-serif;
+    font-size:36px;
+    font-weight:800;
+    color:#fff;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    line-height: 1.2;
+    opacity:0;
+    animation:riseIn .7s ease .2s forwards;
+  }
+  .hero h2{
+    font-family:'Inter', sans-serif;
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:4px;
+    color:#3A2A1E;
+    text-transform:uppercase;
+    margin-top:12px;
+    opacity:0;
+    animation:riseIn .7s ease .4s forwards;
+  }
+  @keyframes riseIn{ from{ opacity:0; transform:translateY(18px);} to{opacity:1; transform:translateY(0);} }
+
+  section.block{ padding:40px 48px; }
+
+  .section-title{
+    font-family:'Poppins', sans-serif;
+    font-size:20px;
+    font-weight:700;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--brown-950);
+    display:flex; align-items:center; gap:18px;
+    margin-bottom:32px;
+  }
+  .section-title::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:linear-gradient(90deg, var(--tan-500), transparent);
+    animation: stretchLine 1.5s ease-out forwards;
+    transform-origin: left;
+  }
+
+  @keyframes stretchLine {
+    0% { transform: scaleX(0); }
+    100% { transform: scaleX(1); }
+  }
+
+  /* reveal-on-scroll */
+  .reveal{ opacity:0; transform:translateY(30px); transition:opacity 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* Content Cards */
+  .content-card {
+    background: #FBF8F5;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--tan-500);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+  }
+
+  .content-card:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 20px 40px rgba(46,29,20,0.08);
+    border-left-color: var(--brown-950);
+  }
+
+  .content-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.6), transparent);
+    transform: translateX(-100%);
+    transition: 0.6s;
+  }
+  
+  .content-card:hover::before {
+    transform: translateX(100%);
+  }
+
+  .content-card h4 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    color: var(--brown-950);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .content-card p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--ink-600);
+    margin-bottom: 16px;
+  }
+
+  .content-card ul {
+    margin: 10px 0 16px 20px;
+    font-size: 14px;
+    color: var(--ink-600);
+    line-height: 1.8;
+  }
+  
+  .content-card ul li {
+    margin-bottom: 8px;
+    padding-left: 5px;
+  }
+
+  /* Data Table */
+  .data-table-wrapper {
+    overflow-x: auto;
+    margin: 20px 0;
+    border-radius: var(--radius);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    transform: scale(0.95);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .data-table-wrapper.in {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  .styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    font-size: 13.5px;
+  }
+
+  .styled-table th {
+    background: var(--brown-950);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-align: left;
+    padding: 16px;
+  }
+
+  .styled-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-900);
+    transition: background 0.3s ease;
+  }
+
+  .styled-table tbody tr {
+    transition: transform 0.2s ease;
+  }
+
+  .styled-table tbody tr:hover {
+    background: #FBF8F5;
+    transform: scale(1.01);
+  }
+
+  .styled-table tbody tr:hover td {
+    color: var(--tan-500);
+    font-weight: 600;
+  }
+
+  /* Image Integration */
+  .paper-image {
+    width: 100%;
+    max-width: 500px;
+    display: block;
+    margin: 30px auto;
+    border-radius: 8px;
+    box-shadow: 0 15px 35px rgba(46,29,20,0.15);
+    transition: all 0.5s ease;
+    filter: sepia(0.2) contrast(1.1);
+  }
+
+  .paper-image:hover {
+    transform: translateY(-10px) rotate(1deg) scale(1.03);
+    box-shadow: 0 25px 50px rgba(46,29,20,0.25);
+    filter: sepia(0) contrast(1);
+  }
+  
+  .cite {
+    font-size: 11px;
+    background: var(--line);
+    color: var(--ink-600);
+    padding: 2px 6px;
+    border-radius: 4px;
+    vertical-align: super;
+    font-family: monospace;
+    opacity: 0.8;
+  }
+
+  /* Staggered lists */
+  .stagger-list li {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  
+  .stagger-list.in li {
+    animation: slideRightFade 0.5s forwards;
+  }
+  
+  .stagger-list.in li:nth-child(1) { animation-delay: 0.1s; }
+  .stagger-list.in li:nth-child(2) { animation-delay: 0.2s; }
+  .stagger-list.in li:nth-child(3) { animation-delay: 0.3s; }
+  .stagger-list.in li:nth-child(4) { animation-delay: 0.4s; }
+  .stagger-list.in li:nth-child(5) { animation-delay: 0.5s; }
+
+  @keyframes slideRightFade {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  footer{
+    text-align:center; padding:30px; font-size:12px; color:var(--ink-600);
+    border-top:1px solid var(--line);
+    background: #FBF8F5;
+  }
+
+  @media (max-width:760px){
+    .page{ grid-template-columns:1fr; }
+    .hero h1{ font-size:28px; letter-spacing:1px; }
+    section.block, .hero{ padding-left:26px; padding-right:26px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="sidebar">
+    <a href="#" class="nav-btn">← Back to Profile</a>
+
+    <div class="side-block">
+      <h3>Project Focus</h3>
+      <p>A detailed breakdown of finite-element-based optimization for transmission systems, extracted from International Research Journal of Engineering and Technology (IRJET) <span class="cite"></span>.</p>
+    </div>
+
+    <div class="side-block">
+      <h3>Source Details</h3>
+      <p><strong>Journal:</strong> IRJET<br>
+      <strong>Volume:</strong> 03 Issue: 12<br>
+      <strong>Date:</strong> Dec -2016<br>
+      <strong>Page:</strong> 687 <span class="cite"></span></p>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN ================= -->
+  <main class="main">
+
+    <div class="hero">
+      <h1>Research Methodology</h1>
+      <h2>Gearbox Casing Optimization</h2>
+    </div>
+
+    <section class="block reveal">
+      <div class="section-title">III. Methodology</div>
+      <div class="content-card">
+        <p>The problem under consideration will be modeled through four approaches <span class="cite"></span> (Note: source text states "four approaches" but lists five):</p>
+        <ul class="stagger-list reveal">
+          <li><strong>A.</strong> CAD Modeling <span class="cite"></span></li>
+          <li><strong>B.</strong> Finite Element Meshing <span class="cite"></span></li>
+          <li><strong>C.</strong> Boundary Conditions <span class="cite"></span></li>
+          <li><strong>D.</strong> Finite Element Analysis <span class="cite"></span></li>
+          <li><strong>E.</strong> Optimization <span class="cite"></span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="block reveal">
+      <div class="section-title">A. CAD Modeling</div>
+      <div class="content-card">
+        <h4>⚙️ Base & Optimized Design Parameters</h4>
+        <p>The important parametric quantity while designing gear box casing is ribbing which is to attain required strength <span class="cite"></span>. The CAD model is imported into IGES file format to the FEM design software Altair Hypermesh 11.0 <span class="cite"></span>.</p>
+        
+        <ul>
+          <li><strong>Existing CAD Model (Fig.1):</strong> The CAD Model of gearbox casing specification is Length-1435mm Width-520mm Height- 800mm <span class="cite"></span>.</li>
+          <li><strong>Optimized CAD Model (Fig.2):</strong> The CAD Model of gearbox casing specification is Length-1465mm, Width-540mm, Height- 870mm and wall thickness reduced from 16mm to 14mm <span class="cite"></span>.</li>
+        </ul>
+
+        <img src="image_4511b9.png" alt="IRJET Research Paper Page 687" class="paper-image reveal" loading="lazy">
+      </div>
+    </section>
+
+    <section class="block reveal">
+      <div class="section-title">Table 1. Gearbox Specification</div>
+      <div class="data-table-wrapper reveal">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Input Power</td>
+              <td>84kW <span class="cite"></span></td>
+            </tr>
+            <tr>
+              <td>Input Speed</td>
+              <td>1000 rpm <span class="cite"></span></td>
+            </tr>
+            <tr>
+              <td>Output speed</td>
+              <td>16 rpm <span class="cite"></span></td>
+            </tr>
+            <tr>
+              <td>Unit size</td>
+              <td>15 <span class="cite"></span></td>
+            </tr>
+            <tr>
+              <td>Mechanical Rating Power</td>
+              <td>151kW <span class="cite"></span></td>
+            </tr>
+            <tr>
+              <td>Ratio</td>
+              <td>63:1 <span class="cite"></span></td>
+            </tr>
+            <tr>
+              <td>Overhung load</td>
+              <td>150kN <span class="cite"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block reveal">
+      <div class="section-title">B. FEM Model</div>
+      <div class="content-card">
+        <h4>🖥️ Meshing & Geometry Cleanup</h4>
+        <p>The cad model in IGES format is imported in HyperMesh for the preparation of FE model <span class="cite"></span>. Then geometry cleanup was done by using options like 'geom. Cleanup' and 'defeature' to modify the geometry data and prepapre it for meshing operation <span class="cite"></span>.</p>
+        
+        <ul>
+          <li>Mesh model is prepared by using Hypermesh 11.0 <span class="cite"></span>.</li>
+          <li>2D Quad or tria meshing is carried out on all the outer and inner surfaces of the geometry, quads splits to trias and then converted to tetras <span class="cite"></span>.</li>
+          <li>A 4-node Linear Tetra 3D solid elements are used to model of Gearbox and End covers <span class="cite"></span>.</li>
+          <li>The element size selected for Casing and End covers mesh is 10mm <span class="cite"></span>.</li>
+          <li>Gearbox model is meshed with about 207700 nodes 792400 elements <span class="cite"></span>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>© Junaid — Enhanced Research Portfolio Page. Document data extracted from IRJET <span class="cite"></span>.</footer>
+  </main>
+
+</div>
+
+<script>
+  // Advanced Intersection Observer for multiple animation types
+  const revealEls = document.querySelectorAll('.reveal');
+  const listEls = document.querySelectorAll('.stagger-list');
+  const tableEls = document.querySelectorAll('.data-table-wrapper');
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        // Optional: unobserve after animating to keep it static, 
+        // or leave it observing to re-trigger (though standard practice is to unobserve)
+        io.unobserve(entry.target); 
+      }
+    });
+  }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+
+  revealEls.forEach(el => io.observe(el));
+  listEls.forEach(el => io.observe(el));
+  tableEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
